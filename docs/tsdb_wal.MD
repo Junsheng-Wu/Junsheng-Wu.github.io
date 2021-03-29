@@ -10,7 +10,9 @@
 
 4. wal 不进行重压缩，因此， wal（默认启用）提供了snappy 压缩记录的选项。 可通过配置选择启用或禁用压缩。
 &emsp;
+
 #### WAL文件结构
+
 ```
 data
 └── wal
@@ -20,6 +22,7 @@ data
 ```
 文件名称是逐个增加的，文件名称越大表示文件越新。  
 &emsp;
+
 #### checkpoint
 
 在截断WAL之前， 需要在要删除的WAL segment 中创建一个 checkpoint， checkpoint 操作将按照顺序检查wal中的所有segment:  
@@ -41,10 +44,12 @@ data
 如果有旧的checkpoint， 此时将其删除。
 
 #### WAL重载
+
 checkpoint.x 告诉我们从哪里开始加载wal目录, x+1, 表示第一个开始加载的 wal segment.  
 &emsp;
  
 #### WAL写入
+
 ![avatar](../images/wal_write.png)
 
 samples 写入header 写入一份到head(内存中的头block)中，追加写入一份到wal中。 写入后每达到一个segment大小后及写入.
