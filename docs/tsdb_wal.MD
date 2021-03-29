@@ -1,6 +1,6 @@
 [返回](../index.md)
 
-###WAL
+### WAL
 
 1. wal全称 write ahead log, 在数据写入数据库之前，一份写入内存，另外将一份数据写入到wal中，当prometheus意外重启，prometheus启动时会读取wal中的数据以恢复数据在内存中的状态。
 
@@ -20,7 +20,7 @@ data
 ```
 文件名称是逐个增加的，文件名称越大表示文件越新。  
 &emsp;
-####checkpoint
+#### checkpoint
 
 在截断WAL之前， 需要在要删除的WAL segment 中创建一个 checkpoint， checkpoint 操作将按照顺序检查wal中的所有segment:  
 1.删除已不存在于head中的所有wal  
@@ -40,11 +40,11 @@ data
 ```
 如果有旧的checkpoint， 此时将其删除。
 
-####WAL重载
+#### WAL重载
 checkpoint.x 告诉我们从哪里开始加载wal目录, x+1, 表示第一个开始加载的 wal segment.  
 &emsp;
  
-####WAL写入
+#### WAL写入
 ![avatar](../images/wal_write.png)
 
 samples 写入header 写入一份到head(内存中的头block)中，追加写入一份到wal中。 写入后每达到一个segment大小后及写入.

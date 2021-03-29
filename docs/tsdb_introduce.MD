@@ -3,11 +3,11 @@
 
 ## TSDB 介绍
 
-#####1.tsdb目录结构
+##### tsdb目录结构
 
 ![avatar](../images/tsdb_dir.png)
 
-#####  index文件  
+##### index文件  
 ![avatar](../images/index.png)
 series 列表：记录当前 block 中有哪些 series，每个 series 有哪些 label 值，有哪些 chunks，每个 chunk 的开始、结束时间；  
 倒排索引（posting）：每个 label 值到 series id 列表的倒排；  
