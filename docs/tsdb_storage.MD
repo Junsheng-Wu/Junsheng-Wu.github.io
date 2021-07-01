@@ -1,6 +1,6 @@
 [返回](../index.md)
 
-# 整体架构
+# TSDB 数据存储流程及数据压缩过程
 ![avatar](../images/tsdb_storage.png)
 
 ### ScrapeManager 管理targets, 每一个target 生成一个 ScrapePool.
