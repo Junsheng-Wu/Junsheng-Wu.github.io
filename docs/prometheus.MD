@@ -13,7 +13,7 @@
 
 
 ## prometheus metrics
-<img src=../images/prometheus-metrics.png width=100% />
+![avatar](../images/prometheus-metrics.png)
 
 - metrics 为prometheus存储数据的最小单位，由metric name，label， timestamp，value，四部分组成。
 - metric name， 在存储数据内部也是以label的形式存储的 {"__name__": "http_request_total"}
