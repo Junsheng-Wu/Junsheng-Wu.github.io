@@ -1,3 +1,4 @@
+[返回](../index.md)
 ## prometheus 架构图
   Do one thing and do it well
 ![avatar](../images/prometheus.png)
