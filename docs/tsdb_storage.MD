@@ -48,7 +48,14 @@ scrapeManager = scrape.NewManager(log.With(logger, "component", "scrape manager"
 
 
 ### Head 存储流程
-![avatar](../images/head_block.png)
+- Prometheus 新采集的样本都会存到 Head block, 其中每一个 series 会存到唯一对应的压缩单元(即 chunk) 里. 为了防止 Prometheus 挂了导致内存中的数据丢失, 新采集到的数据还会写到预写日志中.如下图：
+![avatar](../images/tsdb-store-1.png)
+
+- 自 Prometheus v2.19.0 之后, 当一个 chunk “已满” 时, 它就会被刷新到磁盘中, 并从磁盘中进行内存映射（memory-map）, 仅在内存中存储一个它的引用. 有了内存映射, 可以再需要的时候通过引用动态地将 chunk 加载到内存中, 这是操作系统提供的特性, 参考: https://en.wikipedia.org/wiki/Mmap.
+![avatar](../images/tsdb-store-2.png)
+![avatar](../images/tsdb-store-3.png)
+- 当 Head 中的数据跨度达到 3h 时（mmap 中数据的时间跨度）, 则最久的两个小时的数据(即上图的 1~4)将被压缩成一个block.![avatar](../images/tsdb-store-6.png)
+
 - 每隔两小时截取一个新的block后保存到数据库中
 - 截取header的同时删除wal
 - 每隔一分钟检测过期数据并删除， 检测块状态， 如果有损坏则退出。
@@ -56,4 +63,4 @@ scrapeManager = scrape.NewManager(log.With(logger, "component", "scrape manager"
 ### Compact
 - plan 挑选出能够被压缩的块
 - 块压缩合并块 meta.json
-- 合并块后生成新的 block，生成新的uid 
+- 合并块后生成新的 block，生成新的uid
